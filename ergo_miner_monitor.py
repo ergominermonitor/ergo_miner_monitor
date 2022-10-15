@@ -151,9 +151,9 @@ if __name__ == "__main__":
     # Create a dictionary with all the arguments. It will be converted to a json file in Main()
     arguments = {'retry_sec': retry_sec, 'wallet': wallet, 'retries': retries,
                  'targettotalhashrate': targettotalhashrate, 'exe_name': exe_name, 'miner': miner,
-                 'stratumproxy': stratumproxy, 'url': url, 'pool': pool, 'Verbose': Verbose,
+                 'stratumproxy': stratumproxy, 'URL': url, 'pool': pool, 'Verbose': Verbose,
                  'Verbose_dev': Verbose_dev, 'color': color, 'to_log': to_log, 'debug': debug, 'logfile': logfile,
-                 'bat_file': bat_file, 'flypool_to_be_called': flypool_to_be_called, 'path': path, 'q': q,
+                 'bat_file': bat_file, 'flexpool_to_be_called': flypool_to_be_called, 'path': path, 'q': q,
                  'nvidia': nvidia, 'mode': mode, "overclock_settings": overclock_settings, 'overclock': overclock}
     main(arguments)
     while True:
