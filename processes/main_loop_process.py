@@ -39,7 +39,7 @@ def main_loop(retries=5, to_log=True, URL='', retry_sec=5, miner='miner', stratu
     bat_file = bat_file
     flypool_to_be_called = str2bool(flypool_to_be_called)
     q = q
-    with open(os.path.join(path, '../arguments.json'), 'r', encoding='utf-8') as file:
+    with open(os.path.join(path, 'arguments.json'), 'r', encoding='utf-8') as file:
         json_data = json.load(file)
         process_cable_pid = int(json_data['process_cable_pid'])
         process_internet_pid = int(json_data['process_internet_pid'])
