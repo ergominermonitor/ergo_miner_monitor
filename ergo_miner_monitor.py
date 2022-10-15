@@ -253,18 +253,19 @@ def call_pool(pool='herominers', wallet='', debug=False, to_log=True, q=''):
             return current_hashrate, hashrate_1h, hashrate_6h, hashrate_24h, valid_shares, stale_shares, invalid_shares, pending_balance
         except (selenium.common.exceptions.WebDriverException, selenium.common.exceptions.SessionNotCreatedException,
                 Exception) as err:
-            trace_error(to_log=to_log, q=q)
-            try:  # Quit Firefox
-                driver.quit()
-            except AttributeError:  # If driver is None due to another error, so None can not quit.
-                pass
-            except (selenium.common.exceptions.WebDriverException, Exception) as err:
-                trace_error(to_log=to_log, q=q)
+            trace_error(to_log=to_log, q=q, to_print_error=False)
             if not debug:
                 cprint("Firefox probably not found. Trying with Chrome", to_log=to_log, q=q)
             elif debug:
                 cprint(f"Firefox probably not found. Trying with Chrome.\tError: {err}", to_log=to_log, q=q)
-                # Try with Chrome
+            try:  # Quit Firefox
+                driver.quit()
+            # If driver is None due to another error, so driver=None and driver.quit() is not valid.
+            except AttributeError:
+                pass
+            except (selenium.common.exceptions.WebDriverException, Exception) as err:
+                trace_error(to_log=to_log, q=q, to_print_error=False)
+            # Try with Chrome
             try:
                 options = webdriver.ChromeOptions()
                 options.add_argument(
@@ -311,16 +312,17 @@ def call_pool(pool='herominers', wallet='', debug=False, to_log=True, q=''):
                 pending_balance = pending_balanace_element.text
                 driver.quit()
                 return current_hashrate, hashrate_1h, hashrate_6h, hashrate_24h, valid_shares, stale_shares, invalid_shares, pending_balance
-            except (
-            selenium.common.exceptions.WebDriverException, selenium.common.exceptions.SessionNotCreatedException,
-            Exception) as err:
-                trace_error(to_log=to_log, q=q)
-                try:  # Quit Chrome
-                    driver.quit()
-                except (selenium.common.exceptions.WebDriverException, Exception) as err:
-                    trace_error(to_log=to_log, q=q)
+            except (selenium.common.exceptions.WebDriverException,
+                    selenium.common.exceptions.SessionNotCreatedException,
+                    Exception) as err:
                 cprint(f"Cannot access either Chrome or Firefox in order to connect to herominers: {err}",
                        to_log=to_log, q=q)
+                trace_error(to_log=to_log, q=q, to_print_error=False)
+                try:  # Quit Chrome
+                    driver.quit()
+                except (selenium.common.exceptions.WebDriverException, Exception):
+                    trace_error(to_log=to_log, q=q)
+
     else:
         cprint("No pool was passed", to_log=to_log, q=q)
     end = datetime.now()
