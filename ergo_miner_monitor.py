@@ -1,5 +1,5 @@
 ###############################################################
-# miner watchdog 5/10/22 => bug fixes #
+# miner watchdog 15/10/22 => bug fixes #
 ################################################################
 import random, re, socket, os, colorama, requests, time, platform, subprocess, psutil, ctypes, sys, decimal
 import itertools
@@ -203,7 +203,7 @@ def call_pool(pool='herominers', wallet='', debug=False, to_log=True, q=''):
                 cprint(f"Cannot access either Chrome or Firefox in order to connect to WoolyPooly: {err}",
                        to_log=to_log, q=q)
     elif pool in ('flypool', 'ethermine'):
-        text = call_flypoop_api(wallet=wallet, flypool_to_be_called=True, to_log=to_log, q=q, debug=debug)
+        text = call_flypool_api(wallet=wallet, flypool_to_be_called=True, to_log=to_log, q=q, debug=debug)
         return text
     elif pool == "herominers":
         herominers_base_url = "https://ergo.herominers.com/"
@@ -472,7 +472,16 @@ def kill_other_instances(name="", to_log=True, Verbose=True, main_parent_pid='',
         cprint(f"Killing_other_instances Function error due to {err}", to_log=to_log, q=q)
 
 
-def call_flypoop_api(wallet='', flypool_to_be_called=True, to_log=True, q='', debug=False):
+def call_flypool_api(wallet='', flypool_to_be_called=True, to_log=True, q='', debug=False):
+    """
+    Calls flypool's API based on wallet passed.
+    :param wallet: str: The Wallet
+    :param flypool_to_be_called:
+    :param to_log: Boolean
+    :param q: The Queue object
+    :param debug: Boolean
+    :return: str: Info from Flypool's API
+    """
     if flypool_to_be_called:
         url_workers = f"https://api-ergo.flypool.org/miner/{wallet}/dashboard"
         try:
@@ -1310,7 +1319,7 @@ def main_loop(retries=5, to_log=True, URL='', retry_sec=5, miner='miner', stratu
                         # Erase "Stale shares ratio -- Invalid shares ratio"
                         text = text.replace(f"\n{22 * ' '}{6 * ' '}Stale shares ratio -- Invalid shares ratio", '')
                 elif pool == 'flypool':
-                    flypool_text = call_flypoop_api(wallet=wallet, flypool_to_be_called=flypool_to_be_called,
+                    flypool_text = call_flypool_api(wallet=wallet, flypool_to_be_called=flypool_to_be_called,
                                                     to_log=to_log, debug=debug, q=q)
                     text = text + flypool_text
                 text = text + f'\n-------------------------------------------------------------------------------' \
