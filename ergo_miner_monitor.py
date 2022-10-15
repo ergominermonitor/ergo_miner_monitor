@@ -16,6 +16,7 @@ from helper_functions import is_admin, str2bool, exe_name_of_miner, bat_name_of_
     check_write_update_json_arguments
 from logger_ import check_path, check_filemode, start_logging
 from pools.call_pool import call_pool, call_flypool_api
+from miner.miner_api import get_infos
 
 colorama.init(convert=False)  # True to pass the coloured text to the windows cmd. False for python console.
 
@@ -35,47 +36,12 @@ json_example = '''"{
         , "total": 62.0918 , "uptime": "0h"  
         }"'''
 
-
-def get_infos(url='http://127.0.0.1:36207/', debug=False, to_log=True, q=''):
-    """Returns the information from miner's API as a dictionary containing a tuple for each gpu"""
-    infos = {}
-    try:
-        page = requests.get(url)
-    #  https://stackoverflow.com/questions/16511337/correct-way-to-try-except-using-python-requests-module
-    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.HTTPError) as err:
-        trace_error(to_log=to_log, q=q)
-        if not debug:
-            cprint("Error in connecting to miner\'s API", to_log=to_log, q=q)
-        if debug:
-            cprint(f"Error in miner\'s API: {err}", to_log=to_log, q=q)
-        return None
-    try:
-        json_data = json.loads(page.text)  # String to json (In python json is a dictionary)
-        for number, a in enumerate(json_data['devices']):
-            gpu_name = json_data['devices'][0]['devname']
-            pci_id = json_data['devices'][0]['pciid']
-            hashrate = json_data['devices'][0]['hashrate']
-            power = json_data['devices'][0]['power']
-            temperature = json_data['devices'][0]['temperature']
-            total_hashrate = json_data['total']
-            total_time = json_data['uptime']
-            infos[f'gpu{number}'] = (gpu_name, pci_id, hashrate, power, temperature, total_hashrate, total_time)
-        if len(infos) != 0:
-            return infos
-        else:
-            return None
-    except Exception as err:
-        trace_error(to_log=to_log, q=q)
-        cprint(f'Error in get_infos function: {err}', to_log=to_log, q=q)
-        return None
-
-
 process_list = []
 
 
 def kill_other_instances(name="", to_log=True, Verbose=True, main_parent_pid='',
                          debug=False, q=''):
-    """If there are any other instances, we try to kill them (Child & Parent processes)"""
+    """If there are any other instances, it tries to kill them (Child & Parent processes)"""
     process_list = []
     if name == "":
         name = get_name_of_current_exe()
