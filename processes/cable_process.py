@@ -14,7 +14,24 @@ from misc.logger_ import start_logging, check_filemode, check_path
 def check_if_power_cable_is_plugged(color=True, logfile='logfile.txt', debug=False, sole_output=False, to_log=True,
                                     q=mp.Queue, path='', miner='miner.exe', stratumproxy='stratumproxy',
                                     mode='no_battery'):
-    """Checks if the power cable is on"""
+    """
+    Checks constantly (in while True loop) if the power cable is on.
+    If mode = 'battery', it constantly checks in the cable is on.
+    If mode = 'no_battery', it sleeps for 10 secs.
+    If mode is set to something else, it sleeps for 30000 secs. (i.e. it's running on a desktop).
+    :param color: Boolean: Whether the output in terminal contains color or not.
+    :param logfile: The name of the logfile.
+    :param debug: Boolean
+    :param sole_output: Boolean
+    :param to_log: Boolean: Whether it logs the outputs or not
+    :param q: The Queue object
+    :param path: The current path which the exe is running from
+    :param miner: The miner's name
+    :param stratumproxy: The stratum proxy name
+    :param mode: The mode of the battery ("no_battery" or something else). If there is a cable on,
+                 the argument does nothing.
+    :return: None
+    """
     sys.stderr = sys.stdout
     color = str2bool(color)
     debug = str2bool(debug)
@@ -24,9 +41,9 @@ def check_if_power_cable_is_plugged(color=True, logfile='logfile.txt', debug=Fal
     miner = exe_name_of_miner(miner)
     stratumproxy = exe_name_of_miner(stratumproxy)
     colorama.init(convert=bool(color))
-    # Call the function to return and save the string to a variable and then it will be passed to logging
+    # Calls the function to return and save the string to a variable and then it will be passed to logging
     path_to_file = check_path(logfile=logfile, debug=debug, sole_output=sole_output, to_log=to_log, q=q)
-    # Call the function to return and save the string to a variable and then it will be passed to logging
+    # Calls the function to return and save the string to a variable and then it will be passed to logging
     log_mode = check_filemode(path=path_to_file, logfile=logfile, debug=debug, sole_output=sole_output, to_log=to_log,
                               q=q)
     start_logging(path_to_file, log_mode)
