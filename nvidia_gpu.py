@@ -1,7 +1,5 @@
 import time
-
 from pynvraw import api, NvError, get_phys_gpu, nvapi_api, Clocks, get_gpus
-
 from pynvraw.cuda_api import get_cuda_bus_slot
 
 
@@ -121,9 +119,9 @@ if __name__ == "__main__":
     print(gpu_core_memory(gpu0))
     # offset = get_core_memory_offset(gpu[0])
     print(get_core_memory_offset(gpu[0]))
-    #gpu_overclock(gpu[0], memory='349.999', core='200')
+    # gpu_overclock(gpu[0], memory='349.999', core='200')
     # gpu_overclock(gpu[0], memory=0, core=-275)
-    #gpu_overclock(gpu[0], memory=530, core=200)
+    # gpu_overclock(gpu[0], memory=530, core=200)
     # gpu_overclock(gpu[0], memory='a', core='a')
     print(get_core_memory_offset(gpu[0]))
     # print(gpu_core_memory(get_gpu_readings(gpu[0])))
