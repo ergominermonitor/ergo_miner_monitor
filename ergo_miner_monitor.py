@@ -45,6 +45,7 @@ def kill_other_instances(name="", to_log=True, Verbose=True, main_parent_pid='',
     """
     If there are any other instances, it tries to kill them (Child & Parent processes)
     It traces and kills standalone .exe with the same name or python.exe, when running as a .py script.
+    If the exe is a python.exe, it will kill all other python.exe running at the moment.
     :param name: If not given, it's the name of the current exe.
     :return: None
     """
