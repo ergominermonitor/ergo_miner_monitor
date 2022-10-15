@@ -146,15 +146,23 @@ def exe_name_of_miner(processName):
 
 
 def get_name_of_current_exe():
-    """Returns the name of the current process. For example: internet.exe"""
+    """
+    Returns the name of the current process. For example: internet.exe
+    If it's running from .py, it returns the python.exe.
+    """
     path = sys.argv[0]
     if platform.system() == 'Windows':
-        if '\\' in path:
-            name = path.split('\\')[-1]
-            return name
-        elif '/' in path:
-            name = path.split('/')[-1]
-            return name
+        # Running from a .py
+        if '.py' in sys.argv[0].split('\\')[0]:
+            return os.path.basename(sys.executable)
+        # Running as an .exe
+        else:
+            if '\\' in path:
+                name = path.split('\\')[-1]
+                return name
+            elif '/' in path:
+                name = path.split('/')[-1]
+                return name
 
 
 def bat_name_of_miner(batname):
@@ -319,7 +327,7 @@ def checkIfProcessRunning(processName, to_print=False, to_log=True, Verbose=True
         return True
 
 
-def findAllProcessesRunning(processName, to_print=False, to_log=True, Verbose=True, q=''):
+def findAllProcessesRunning(processName: str, to_print=False, to_log=True, Verbose=True, q=''):
     """
     Returns a list with dictionaries containings all the pids with the same name. If no process is found,
     it returns an empty list.
