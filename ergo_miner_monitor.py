@@ -1,24 +1,17 @@
 ###############################################################
-# miner watchdog 15/10/22 => bug fixes, refactoring #
+# miner watchdog 16/10/22 => bug fixes, refactoring #
 ################################################################
-import random, socket, os, colorama, requests, time, psutil, sys, decimal
-import itertools
-import json, pathlib, queue
+import os, colorama, psutil, sys
+import pathlib, queue
 import multiprocessing as mp
 from colorama import Style, Fore, Back
-from datetime import datetime
 import argparse
-import nvidia_gpu
-from helper_functions import is_admin, str2bool, exe_name_of_miner, bat_name_of_miner, get_current_time, \
-    cprint, without_colorama, file_exist, prompt_to_acquire_admin_rights_and_exit, get_name_of_current_exe, \
-    restart_whole_process, headers, checkIfProcessRunning, killiftheprocess, countdown_to_restart_whole_process, \
-    start_the_miner, start_the_oc_bat_file, suspend_resume_miner, findAllProcessesRunning, trace_error, \
-    check_write_update_json_arguments
+from helper_functions import str2bool, cprint, prompt_to_acquire_admin_rights_and_exit, \
+    get_name_of_current_exe, check_write_update_json_arguments
 from logger_ import check_path, check_filemode, start_logging
-from pools.call_pool import call_pool, call_flypool_api
-from miner.miner_api import get_infos
 from processes.cable_process import check_if_power_cable_is_plugged
-from processes.other_instances import kill_other_instances
+from processes.internet_connection_process import checking_internet_connection
+from processes.main_loop_process import main_loop
 
 colorama.init(convert=False)  # True to pass the coloured text to the windows cmd. False for python console.
 
@@ -39,12 +32,6 @@ json_example = '''"{
         }"'''
 
 process_list = []
-
-
-
-
-
-
 
 
 def main(arguments):
