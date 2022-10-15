@@ -8,11 +8,11 @@ from datetime import datetime
 import colorama
 import psutil
 from colorama import Fore, Style, Back
-import nvidia_gpu
+from misc import nvidia_gpu
 from helper_functions import str2bool, cprint, get_name_of_current_exe, checkIfProcessRunning, exe_name_of_miner, \
     killiftheprocess, start_the_miner, start_the_oc_bat_file, countdown_to_restart_whole_process, trace_error, \
     get_current_time
-from logger_ import check_path, start_logging, check_filemode
+from misc.logger_ import check_path, start_logging, check_filemode
 from miner.miner_api import get_infos
 from pools.call_flypool_api import call_flypool_api
 from pools.call_pool import call_pool

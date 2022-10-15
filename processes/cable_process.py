@@ -8,7 +8,7 @@ import psutil
 from colorama import Fore, Style
 from helper_functions import str2bool, exe_name_of_miner, cprint, countdown_to_restart_whole_process, \
     restart_whole_process, suspend_resume_miner
-from logger_ import start_logging, check_filemode, check_path
+from misc.logger_ import start_logging, check_filemode, check_path
 
 
 def check_if_power_cable_is_plugged(color=True, logfile='logfile.txt', debug=False, sole_output=False, to_log=True,

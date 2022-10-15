@@ -10,7 +10,7 @@ import psutil
 from colorama import Fore, Style
 from helper_functions import str2bool, exe_name_of_miner, cprint, countdown_to_restart_whole_process, \
     suspend_resume_miner, restart_whole_process
-from logger_ import check_path, check_filemode, start_logging
+from misc.logger_ import check_path, check_filemode, start_logging
 
 
 def checking_internet_connection(color=True, logfile='logfile.txt', debug=False, sole_output=False, to_log=True,
