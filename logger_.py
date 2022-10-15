@@ -7,8 +7,16 @@ from helper_functions import cprint, file_exist, get_current_time, trace_error
 
 
 def check_path(logfile='logfile.txt', sole_output=False, debug=False, to_log=False, q=''):
-    """Returns the path of the logfile
-       The output won't be logged because start_logging() starts after check_path and check_filemode are called"""
+    """
+    Returns the path of the logfile
+    The output won't be logged because start_logging() starts after check_path and check_filemode are called
+    :param logfile: The name of the logfile
+    :param sole_output: A Boolean variable to print the output only once
+    :param debug: Boolean
+    :param to_log: Boolean parameter to control logging from this function
+    :param q: The Queue object
+    :return path_to_file: The path to the logging file as string.
+    """
     path_to_file = ''
     try:
         #  If the script is running from a python console.
@@ -38,7 +46,6 @@ def check_path(logfile='logfile.txt', sole_output=False, debug=False, to_log=Fal
                 if debug and sole_output:
                     cprint(f"check_path(): list of the path: {name}", to_log=to_log, q=q)
             path_to_file = f"{path_to_file}\\{logfile}"
-            # path_to_file = pathlib.Path(os.path.join(path_to_file,logfile))
             if debug and sole_output:
                 cprint(f'check_path(): path_to_file: {path_to_file}', to_log=to_log, q=q)
             return path_to_file
@@ -72,7 +79,6 @@ def check_path(logfile='logfile.txt', sole_output=False, debug=False, to_log=Fal
                     cprint(path_to_file, to_log=to_log, q=q)
                     cprint(f"check_path(): list of the path: {name}", to_log=to_log, q=q)
             path_to_file = f"{path_to_file}\\{logfile}"
-            # path_to_file = pathlib.Path(os.path.join(path_to_file, logfile))
             if debug and sole_output:
                 cprint(f'check_path(): path_to_file: {path_to_file}', to_log=to_log, q=q)
             return path_to_file
@@ -134,8 +140,6 @@ def start_logging(path_to_file, log_mode):
                             filename=path_to_file,
                             filemode=log_mode,
                             force=True)
-        # cprint(f'Logging started.')
-        # time.sleep(0.01)
     except Exception as err:
-        trace_error()  # TODO: To save to a file errors.txt
+        trace_error()
         cprint(f"start_logging()> {err}")
