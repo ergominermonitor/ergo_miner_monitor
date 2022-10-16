@@ -30,6 +30,10 @@ json_example = '''"{
         , "total": 62.0918 , "uptime": "0h"  
         }"'''
 
+
+
+
+
 if __name__ == "__main__":
     prompt_to_acquire_admin_rights_and_exit()
     sys.stderr = sys.stdout
