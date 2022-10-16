@@ -16,7 +16,7 @@ def check_if_power_cable_is_plugged(color=True, logfile='logfile.txt', debug=Fal
                                     mode='no_battery'):
     """
     Checks constantly (in while True loop) if the power cable is on.
-    If mode = 'battery', it constantly checks in the cable is on.
+    If there is a battery, the function constantly checks if the cable is on.
     If mode = 'no_battery', it sleeps for 10 secs.
     If mode is set to something else, it sleeps for 30000 secs. (i.e. it's running on a desktop).
     :param color: Boolean: Whether the output in terminal contains color or not.
