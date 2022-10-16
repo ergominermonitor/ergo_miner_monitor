@@ -213,6 +213,7 @@ def main_loop(retries=5, to_log=True, URL='', retry_sec=5, miner='miner', stratu
                         text = text + f"\n{22 * ' '}       {hashrate_3h}           {hashrate_24}          {payment:0.2f}"
                 elif pool == "herominers":
                     data = call_pool(pool=pool, wallet=wallet, to_log=to_log, q=q, debug=debug)
+                    hashrate_24 = ''
                     try:
                         hashrate_24 = float(data[3].strip("MH/s").strip() if data[3].strip("MH/s").strip() != '' else 0)
                     except TypeError:  # Data returned None
