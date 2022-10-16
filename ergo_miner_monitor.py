@@ -15,6 +15,8 @@ colorama.init(convert=False)  # True to pass the coloured text to the windows cm
 Verbose = None
 Verbose_dev = None
 
+
+
 #  Sample from json
 json_example = '''"{  
         "gpus":1 ,  "devices" : 
