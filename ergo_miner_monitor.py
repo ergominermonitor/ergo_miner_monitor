@@ -30,6 +30,7 @@ json_example = '''"{
         }"'''
 
 
+
 if __name__ == "__main__":
     prompt_to_acquire_admin_rights_and_exit()
     sys.stderr = sys.stdout
