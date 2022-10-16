@@ -71,10 +71,9 @@ def main(arguments):
                                         f'{str2bool(to_log)}',
                                         q, path, f'{arguments["miner"]}', f'{arguments["stratumproxy"]}'
                                         ))
-    arguments['q'] = 'None'  # Delete the Queue object from the arguments dict.
+    arguments['q'] = 'None'  # Delete the Queue object from the arguments' dict.
     # The q [in the first lines of main()] still holds the Queue object, though. Use that if you need the Queue.
     json_data = {}
-
     process_main_loop.start()
     psutil.Process(process_main_loop.pid).nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
     arguments['process_main_loop_pid'] = process_main_loop.pid

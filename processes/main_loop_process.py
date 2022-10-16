@@ -217,7 +217,7 @@ def main_loop(retries=5, to_log=True, URL='', retry_sec=5, miner='miner', stratu
                         hashrate_24 = float(data[3].strip("MH/s").strip() if data[3].strip("MH/s").strip() != '' else 0)
                     except TypeError:  # Data returned None
                         hashrate_24 = ''
-                    except Exception as err:
+                    except Exception:
                         trace_error(to_log=to_log, q=q)
                     text = text + f"\n{22 * ' '}Pool: Hashrate 1h -- Hashrate 6h -- Hashrate 24h -- Balance"
                     if '.py' in sys.argv[0].split('\\')[0]:
